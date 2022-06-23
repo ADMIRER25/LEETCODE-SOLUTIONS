@@ -1,0 +1,72 @@
+Time Complexity --> O() // Space Complexity-->O()
+---------------------------------------------------
+Code:
+----
+ int minimumDeletions(vector<int>& A) {
+        int i = 0, j = 0, n = A.size();
+        for (int k = 0; k < n; ++k) {
+            if (A[i] < A[k]) i = k;
+            if (A[j] > A[k]) j = k;
+        }
+        return min({max(i + 1, j + 1), max(n - i, n - j), i + 1 + n - j, j + 1 + n - i});
+    }
+  Code:
+  -----
+  class Solution {
+public:
+    int minimumDeletions(vector<int>& nums) {
+        int maxIndex = (max_element(nums.begin(),nums.end()) - nums.begin()) + 1;
+        int minIndex = (min_element(nums.begin(),nums.end()) - nums.begin()) + 1;
+        if(maxIndex > minIndex)
+        {
+            if(maxIndex > minIndex + (nums.size()-maxIndex)+1)
+            {
+                if(minIndex + (nums.size()-maxIndex)+1 > nums.size()- minIndex +1 )
+                {
+                    return nums.size()- minIndex +1;
+                }
+                else
+                {
+                    return minIndex + (nums.size()-maxIndex)+1;
+                }
+            }
+            else
+            {
+                 if(maxIndex > nums.size()- minIndex +1 )
+                {
+                    return nums.size()- minIndex +1;
+                }
+                else
+                {
+                    return maxIndex;
+                }
+            }
+        }
+        else
+        {
+            if(minIndex > maxIndex + (nums.size() - minIndex) + 1)
+            {
+                if(maxIndex + (nums.size() - minIndex) + 1 > nums.size()- maxIndex +1 )
+                {
+                    return nums.size()- maxIndex +1;
+                }
+                else
+                {
+                    return maxIndex + (nums.size()-minIndex)+1;
+                }
+            }
+            else
+            {
+                  if(minIndex > nums.size()- maxIndex +1 )
+                {
+                    return nums.size()- maxIndex +1;
+                }
+                else
+                {
+                    return minIndex;
+                }
+            }
+        }
+        
+    }
+};
