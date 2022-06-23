@@ -1,4 +1,4 @@
-Time Complexity --> O() // Space Complexity-->O()
+Time Complexity --> O(n) // Space Complexity-->O(1)
 ---------------------------------------------------
 Code:
 ----
@@ -10,6 +10,8 @@ Code:
         }
         return min({max(i + 1, j + 1), max(n - i, n - j), i + 1 + n - j, j + 1 + n - i});
     }
+    
+    
   Code:
   -----
   class Solution {
