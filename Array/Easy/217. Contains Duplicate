@@ -1,0 +1,19 @@
+Time Complexity --> O(n) // Space Complexity-->O(n)
+---------------------------------------------------
+Code:
+----
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        unordered_set<int>s;
+       for(int value : nums)
+       {
+           if(s.find(value) != s.end())
+           {
+               return true;
+           }
+           s.insert(value);
+       }
+        return false;
+    }
+};
