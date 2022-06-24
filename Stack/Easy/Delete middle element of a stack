@@ -1,0 +1,27 @@
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(N)
+
+Code:
+-----
+class Solution
+{
+    public:
+    //Function to delete middle element of a stack.
+    void deleteMidhelp(stack<int>&s, int size,int count)
+    {
+        if(count == size/2)
+        {
+          s.pop();
+          return;
+        }
+        int temp = s.top();
+        s.pop();
+        deleteMidhelp(s,size,count+1);
+        s.push(temp);
+    }
+    void deleteMid(stack<int>&s, int size)
+    {
+        int count = 0;
+        deleteMidhelp(s,size,count);
+    }
+};
