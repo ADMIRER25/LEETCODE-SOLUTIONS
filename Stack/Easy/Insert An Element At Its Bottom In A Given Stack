@@ -1,0 +1,25 @@
+Time Complexity: O(N), where N is the total number of elements in the stack. 
+Auxiliary Space: O(N) 
+Code:
+-----
+void pushAtBottomhelp(stack<int>&s, int x)
+{  
+   //base case
+   if(s.empty())
+   {
+       s.push(x);
+       return;
+   }
+   int temp = s.top();
+   s.pop();
+   
+   // recursive call
+   pushAtBottomhelp(s,x);
+   s.push(temp);
+}
+
+stack<int> pushAtBottom(stack<int>&s, int x) 
+{
+    pushAtBottomhelp(s,x);
+    return s;   
+}
