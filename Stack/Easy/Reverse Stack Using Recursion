@@ -1,0 +1,56 @@
+Expected Time Complexity: O(N)
+Expected Auxiliary Space: O(N)
+
+Using vector:
+-------------
+class Solution{
+public:
+    vector<int> Reverse(stack<int>st)
+    {
+        vector<int>v;
+        while(!st.empty())
+        {
+            v.push_back(st.top());
+            st.pop();
+        }
+        return v;
+    }
+};
+
+Using Recursion:
+----------------
+----------------
+Time Complexity
+O(N^2), where N is the total number of elements in the given stack.
+
+In the worst case, reverseStack method will be called for each element in the stack( requires O(N)) time, and for each call of the reverse stack, we call InsertAtBottom which also takes O(N) time.
+
+Space Complexity
+O(N), where N is the total number of elements in the given stack.
+
+In the worst case, the depth of recursion can extend up to O(N). So, extra space will be required for the recursion stack.
+
+Code:
+-----
+void push_in_bottom(stack<int>&s,int x)
+{    
+    //base case
+    if(s.empty())
+    {
+        s.push(x);
+        return;
+    }
+    int temp = s.top();
+    s.pop();
+    //recursive call
+    push_in_bottom(s,x);
+    s.push(temp); 
+}
+void reverseStack(stack<int> &s)
+{
+   if(s.empty()) return;
+   int temp= s.top();
+   s.pop();
+   reverseStack(s);
+   push_in_bottom(s,temp);  
+}
