@@ -1,0 +1,30 @@
+Time Complexity
+O(N^2), where N is the number of elements in the stack. 
+In the worst case for every sortStack(), sortedInsert() is called for ‘N’ times recursively for putting element to the right place
+
+Space Complexity
+O(N), where N is the number of elements in the stack.
+This is the space used by the stack data structure to store the elements. 
+
+Code:
+----
+void sortStackhelp(stack<int>&s,int x)
+{
+    if(s.empty() || x >= s.top())
+    {
+        s.push(x);
+        return;
+    }
+      int top = s.top();
+      s.pop();
+      sortStackhelp(s,x);
+      s.push(top);
+}
+void sortStack(stack<int> &s)
+{
+	if(s.empty()) return;
+    int top = s.top();
+    s.pop();
+    sortStack(s);
+    sortStackhelp(s,top);
+}
