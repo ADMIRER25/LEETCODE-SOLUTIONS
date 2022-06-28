@@ -1,0 +1,70 @@
+Time Complexity --> O(n^2)
+Space Complexity--> O(1)
+CODE:
+----
+class Solution 
+{
+    public:
+    //Function to find if there is a celebrity in the party or not.
+    int celebrity(vector<vector<int>>&a, int n) 
+    {
+       //brute force approach 
+       int celeb = -1;
+       for(int i = 0; i < n; i++)
+       {
+           int count = 0;
+           for(int j = 0; j < n; j++)
+           {
+               //ignore diagonal elements
+               if(i == j) continue;
+               else if(a[i][j] == 0 && a[j][i] == 1) count++; // celeb dont know anybody but everybody knows celeb.
+               else break;
+           }
+           if(count == n-1)
+           {
+               celeb = i;
+               break;
+           }
+       }
+       return celeb;
+    }
+};
+
+Using stack:
+------------
+T.C--> O(n)
+S.C-->O(n)
+code:
+-----
+class Solution 
+{
+    public:
+    //Function to find if there is a celebrity in the party or not.
+    int celebrity(vector<vector<int>>&a, int n) 
+    {
+      //using stack 
+      stack<int>st;
+      int i,j;
+      for(int i = 0; i < n; i++)
+      {
+          st.push(i);
+      }
+      while(st.size() > 1)
+      {
+          i = st.top();
+          st.pop();
+          j = st.top();
+          st.pop();
+          if(a[i][j] == 0 && a[j][i] == 1) st.push(i);
+          else if(a[j][i] == 0 && a[i][j] == 1) st.push(j);
+      }
+      if(!st.size()) return -1;
+      int celeb = st.top();
+      for(int i = 0; i < n; i++)
+      {
+          if(i == celeb) continue;
+          if(a[celeb][i] == 1 || a[i][celeb] == 0) return -1;
+      }
+      return celeb;
+    }
+};
