@@ -1,0 +1,83 @@
+Time Comeplexity-->O(N)
+Space Complexity --> O(N) ,N is size of the vector v;
+-----------------------------------------------------
+Code:
+-----
+
+class Solution {
+public:
+    
+    int trap(vector<int>&v)
+    {
+       int n = v.size();
+       vector<int>mxl(n,v[0]),mxr(n,v[n-1]);
+        
+       //for finding mxl
+       for(int i = 1; i < n; i++)
+       {
+           if(v[i] > mxl[i-1]) mxl[i] = v[i];
+           else mxl[i] = mxl[i-1];
+       }
+        
+       //for finding mxr
+       for(int i = n-2; i>=0; i--)
+       {
+           if(v[i] > mxr[i+1]) mxr[i] = v[i];
+           else mxr[i] = mxr[i+1];
+       }
+       int total_water=0;
+       for(int i = 0; i < n; i++)
+       {
+          int mn = min(mxl[i],mxr[i]);
+          total_water +=  (mn-v[i]);
+       }
+       return total_water;
+    };
+    ---------------------------------------------------------------------------
+    Using Two Pointer:
+    ------------------
+Time Comeplexity-->O(N)
+Space Complexity --> O(1) ,N is size of the vector v; 
+---------------------------------------------------------
+Code:
+-----
+
+class Solution {
+public:
+    
+    int trap(vector<int>&v)
+    {
+       int n = v.size();
+       int l_ptr = v[0],r_ptr = v[n-1];
+       int l = 1,r = n-2,ans = 0;
+       while(l <= r) // check point when we have to stop
+       {
+           // chechpoint from which direction water should be filled.
+           if(l_ptr < r_ptr) // water should be filled from low hights 
+           {
+               if(v[l] >= l_ptr) // we dont have any space in right to fill water 
+               {
+                  l_ptr = v[l];
+               }
+               else // we have space in right to fill water
+               {
+                   ans += (l_ptr - v[l]);
+               }
+              l++;
+           }
+           else
+           {
+              if(v[r] >= r_ptr) // we dont have any space in left to fill water 
+               {
+                  r_ptr = v[r];
+               }
+               else // we have space in left to fill water
+               {
+                   ans += (r_ptr - v[r]);
+               }
+              r--; 
+           }
+       }
+       return ans; 
+    }
+};
