@@ -1,0 +1,70 @@
+Time Complexity: O(R x C). 
+Only one traversal of the matrix is required, so the time complexity is O(R X C)
+Space Complexity: O(C). 
+Stack is required to store the columns, so space complexity is O(C)
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Code:
+-----
+class Solution {
+public:
+    int mah(vector<int>&v,int size)
+    {
+        vector<int>ngr(size,size),ngl(size,-1);
+        stack<pair<int,int>>str,stl;
+        //find the ngr
+        for(int i = size-1; i >=0; i--)
+        {
+            int ele = v[i];
+            while(str.size() && str.top().first >= ele)
+            {
+                str.pop();
+            }
+            if(str.size()) ngr[i] = str.top().second;
+            str.push({ele,i}) ;
+        }
+        //find the stl
+         for(int i = 0; i < size; i++)
+        {
+            int ele = v[i];
+            while(stl.size() && stl.top().first >= ele)
+            {
+                stl.pop();
+            }
+            if(stl.size()) ngl[i] = stl.top().second;
+            stl.push({ele,i}) ;
+        }
+        // find the max area;
+        int max = -1;//for finding the max area;
+        int area;
+        for(int i = 0;i < size; i++)
+        {
+            area = v[i]*(ngr[i]-ngl[i]-1);
+            if(max < area) max = area;
+        }
+        return max;
+    }
+    
+int maximalRectangle(vector<vector<char>>&matrix)
+    {
+        int row = matrix.size();
+        int col = matrix[0].size();
+        vector<int>v(col);
+        int max = -1;
+    
+       for(int i = 0; i < row; i++) 
+       {
+           for(int j = 0; j < col; j++)
+           {
+               if(matrix[i][j] != '0') v[j] += 1;
+               else v[j] = 0;
+           }
+           int ans = mah(v,col);
+           if(max < ans)
+           {
+               max = ans;
+           }
+       }
+      return max;
+    }
+};
