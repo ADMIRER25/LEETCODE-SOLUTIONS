@@ -1,0 +1,52 @@
+T.C --> O(1)
+S.C --> O(N)
+------------
+Code:\
+------
+class Queue {
+public:
+    int *arr;
+    int qfront;
+    int rear;
+    int size;
+    Queue() {
+       size = 10001;
+       arr = new int[size];
+       qfront = 0;
+       rear = 0;
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty()
+    {
+       if(qfront == rear) return true;
+        return false;
+    }
+
+    void enqueue(int data) 
+    {
+       if(rear == size) return;
+       arr[rear] = data;
+       rear++;
+    }
+
+    int dequeue()
+    {
+      if(qfront == rear) 
+      {
+          qfront = 0;
+          rear = 0;
+          return -1;
+      }
+      int ans = arr[qfront];
+      qfront++;
+      return ans;
+    }
+
+    int front() 
+    {
+       if(qfront == rear) return -1;
+        return arr[qfront];
+    }
+};
