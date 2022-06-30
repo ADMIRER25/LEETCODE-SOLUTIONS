@@ -1,0 +1,142 @@
+T.C--> O(N)
+S.C--> O(N)
+
+Code:\
+------
+class MinStack
+{
+ public:
+    int tp;
+    int arr[100000];
+    MinStack() 
+    {
+     tp = -1;
+    }
+    
+    void push(int val) 
+    {
+       arr[++tp] = val;
+    }
+    
+    void pop()
+    {
+       tp--;
+    }
+    
+    int top()
+    {
+      return arr[tp] ;
+    }
+    
+    int getMin()
+    {
+        int min = INT_MAX;
+        for(int i = 0; i <= tp; i++)
+        {
+            if(arr[i] < min)
+            {
+                min = arr[i];
+            }
+        }
+        return min;
+    }
+};
+-----------------------------------------------------------------------------------------------------------------------
+T.C --> O(1)
+S.C --> O(2N)
+-------------
+Code:/
+------
+class MinStack {
+public:
+    stack<pair<int ,int>> st;
+    MinStack() 
+    {}
+    void push(int val) 
+    {
+      if(st.empty()) st.push({val,val});
+      else
+      {
+          if(val < st.top().second)
+          {
+            st.push({val,val});
+          }
+          else
+          {
+              st.push({val,st.top().second});
+          }
+      }
+    }
+    
+    void pop()
+    {
+      if(st.empty()) return;
+      st.pop();
+    }
+    
+    int top() 
+    {
+      return st.top().first;
+    }
+    
+    int getMin() 
+    {
+       return st.top().second;
+    }
+};
+--------------------------------------------------------------------------------------------------------------
+T.C --> O(1)
+S.C --> O(N)
+-------------
+Code:
+-----
+class MinStack {
+public:
+    stack<long long>st;
+    long long min;
+    MinStack()
+    {
+      min = INT_MAX;
+    }
+    
+    void push(int value) 
+    {
+        long long val = value;
+        if(st.empty())
+        {
+            st.push(val);
+            min = val;
+        }
+        else
+        {
+            if(val >= min) st.push(val);
+            else
+            {
+              //it will give a lesser value of min so when this value is occur we would know that there is a less value present actually and we set flag bcz when this value value will be popped we have to update the min as previous min with the help of flag.
+               st.push(2*val - min);
+               min = val;
+            }
+        }
+    }
+    
+    void pop() 
+    {
+        if(st.empty()) return;
+        long long ele = st.top();
+        st.pop();
+        if(ele < min) min = (2*min) - ele; 
+    }
+    
+    int top()
+    {
+        if(st.empty()) return -1;
+        long long ele = st.top();
+        if(ele >= min) return ele;
+        return min;
+    }
+    
+    int getMin()
+    {
+      return min;
+    }
+};
