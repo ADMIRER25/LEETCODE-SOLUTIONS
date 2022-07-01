@@ -1,0 +1,50 @@
+Expected Time Complexity : O(n)
+Expected Auxilliary Space : O(n)
+--------------------------------
+Code:(using stack)
+----
+queue<int> rev(queue<int> q)
+{
+   //using stack
+   stack<int>st;
+  while(q.size()) 
+  {
+       //storing the front to push into stack 
+       int ele = q.front();
+       
+       // push in stack 
+       st.push(ele);
+       
+       //pop the element from queue to get the next element 
+       q.pop();
+  }
+   //removing one by one elemenmt from stack and store it into queue 
+   while(st.size())
+   {
+     q.push(st.top());
+     st.pop();
+   }
+   return q;
+}
+----------------------------------------------------------------------------------
+Using Recursion:
+-----------------
+Code:
+-----
+void revhelp(queue<int>&q)
+{
+    //base case 
+    if(q.empty()) return;
+   
+   int ele = q.front();
+   q.pop();
+   //recurive step
+   revhelp(q);
+   q.push(ele);
+}
+queue<int> rev(queue<int> q)
+{
+   //using recursion
+   revhelp(q);
+   return q;
+}
