@@ -1,0 +1,55 @@
+#include<cstring>
+class NQueue{
+public:
+    // Initialize your data structure.
+    int *arr,*front,*rear,*next,freeslot;
+    
+    NQueue(int n, int s)
+    {
+       arr = new int[s];
+       next = new int[s];
+       front = new int[n];
+       rear = new int[n];
+       freeslot = 0;
+       memset(front, -1, n*sizeof(int));
+       memset(rear , -1, n*sizeof(int));
+       for(int i = 0; i < s-1; i++)
+       {
+           next[i] = i+1;
+       }
+       next[s-1] = -1;
+    }
+    // Enqueues 'X' into the Mth queue. Returns true if it gets pushed into the queue, and false otherwise.
+    bool enqueue(int x, int m)
+    {
+        //check overflows 
+        if(freeslot == -1) return false;
+        
+        int index = freeslot;
+        freeslot = next[index];
+        arr[index] = x;
+        //store the 1st element index index into the front.
+        if(front[m-1] == -1)
+        {
+            front[m-1] = index;
+        }
+        else 
+        {
+            next[rear[m-1]] = index;
+        }
+        rear[m-1] = index;
+        next[index] = -1;
+        return true;
+    }
+    // Dequeues top element from Mth queue. Returns -1 if the queue is empty, otherwise returns the popped element.
+    int dequeue(int m)
+    {
+       if(front[m-1] == -1) return -1;
+        
+       int index = front[m-1];
+       front[m-1] = next[index];
+       next[index] = freeslot;
+       freeslot = index;
+       return arr[index];
+    }
+};
