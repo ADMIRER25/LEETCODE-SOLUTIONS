@@ -1,0 +1,44 @@
+T.C--> O(N)
+S.C --> O(N)
+-------------
+Code:\
+------
+void interLeaveQueue(queue < int > & q) 
+{
+    stack<int>st;
+    int n = q.size()/2;
+    int temp = n;
+    //put 1st n elements into stack
+    while(temp--)
+    {
+        st.push(q.front());
+        q.pop();
+    }
+    temp = n;
+    //pust the stack element into  queue
+    while(st.size())
+    {
+        q.push(st.top());
+        st.pop();
+    }
+    //push 1st n elements of queue into queue
+    while(temp--)
+    {
+        q.push(q.front());
+        q.pop();
+    }
+    temp = n;
+    //put 1st n elements into stack
+    while(temp--)
+    {
+        st.push(q.front());
+        q.pop();
+    }
+    while(st.size())
+    {
+        q.push(st.top());
+        q.push(q.front());
+        st.pop();
+        q.pop();
+    }
+}
