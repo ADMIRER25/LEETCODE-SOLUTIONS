@@ -1,0 +1,104 @@
+push --> O(n)
+pop --> O(1)
+peek --> O(1)
+-------------
+Code:\
+------
+class MyQueue {
+public:
+    stack<int>s1,s2;
+    MyQueue() 
+    {}
+    
+    void push(int x)
+    {
+      //transfer element to s1 to s2
+      while(s1.size())
+      {
+        s2.push(s1.top());
+         s1.pop();
+      }
+      //push theelement 
+        s1.push(x);
+        
+      //again return the elements from s2 to s1
+        while(s2.size())
+        {
+            s1.push(s2.top());
+            s2.pop();
+        }
+    }
+    
+    int pop() 
+    {
+      int ele = s1.top();
+      s1.pop();
+      return ele;
+    }
+    
+    int peek() 
+    {
+      return s1.top();
+    }
+    
+    bool empty() 
+    {
+      if(s1.size())
+      {
+        return false;  
+      }
+        return true;
+    }
+};
+
+push --> O(1)
+pop --> amortised O(1)
+peek --> amortised O(1)
+-------------
+Code:\
+------
+class MyQueue {
+public:
+    stack<int>input,output;
+    MyQueue() 
+    {}
+    
+    void push(int x)
+    {
+     input.push(x);
+    }
+    
+    int pop() 
+    {
+      peek();
+      int ele = output.top();
+      output.pop();
+      return ele;
+    }
+    
+    int peek() 
+    {
+      if(output.empty())
+      {
+          while(input.size())
+          {
+              output.push(input.top());
+              input.pop();
+          }
+          return output.top();
+      }
+      else
+      {
+          return output.top();
+      }
+    }
+    
+    bool empty() 
+    {
+      if(input.size() || output.size())
+      {
+        return false;  
+      }
+        return true;
+    }
+};
