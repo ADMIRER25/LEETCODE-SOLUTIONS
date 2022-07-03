@@ -1,0 +1,43 @@
+push-->O(n)
+pop--> O(1)
+-----------
+Code:
+----
+class MyStack {
+public:
+    queue<int>input;
+
+    MyStack() {}
+    
+    void push(int x)
+    {
+      input.push(x); 
+      int rotate = input.size() - 1;
+    while(rotate--)
+      {
+          input.push(input.front());
+          input.pop();
+      }
+    }
+    
+    int pop()
+    {
+      int ele = input.front();
+      input.pop();
+      return ele;
+    }
+    
+    int top() 
+    {
+      return input.front();
+    }
+    
+    bool empty()
+    {
+       if(input.size())
+       {
+           return false;
+       }
+        return true;
+    }
+};
