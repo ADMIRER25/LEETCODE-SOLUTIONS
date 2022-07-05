@@ -1,0 +1,38 @@
+T.C-->O(N)
+s.c-->O(N)
+----------
+Code:
+-----
+class Solution {
+public:
+    void helper(vector<char>&s,int l,int r)
+    {
+        if(l >=r) return;
+        
+        swap(s[l],s[r]);
+        helper(s,l+1,r-1);
+    }
+    void reverseString(vector<char>& s)
+    {
+        //using recursion in two pointer
+        int l = 0, r = s.size()-1;
+        helper(s,l,r);
+    }
+};
+-----------------------------------------------
+class Solution {
+public:
+    void helper(vector<char>&s,int i,int size)
+    {
+        if(i >= size/2) return;
+        
+        swap(s[i],s[size-i-1]);
+        helper(s,i+1,size);
+    }
+    void reverseString(vector<char>& s)
+    {
+        //using recursion in one pointer
+        int l = 0, size= s.size();
+        helper(s,l,size);
+    }
+};
