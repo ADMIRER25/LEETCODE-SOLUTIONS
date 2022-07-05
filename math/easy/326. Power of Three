@@ -1,0 +1,13 @@
+t.c-->O(1)
+s.c-->O(1)
+----------
+Code:
+-----
+class Solution {
+public:
+    bool isPowerOfThree(int num)
+    {
+        return (num > 0) && (1162261467 % num == 0); // the max number which is to the power of 3
+        //we can determine it 3^floor((log(3,2^31 - 1))) and this number should be divisable all the power of 3
+    }
+};
