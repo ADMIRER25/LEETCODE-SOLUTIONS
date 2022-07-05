@@ -1,0 +1,30 @@
+T.C-->O(2^N)
+S.c --> O(N)
+------------
+Code:
+-----
+class Solution {
+public:
+    void helper(vector<vector<int>>&ans,vector<int>&subset,vector<int>&nums,int index)
+    {
+       if(index >= nums.size())
+       {
+         ans.push_back(subset);
+           return;
+       }
+        
+        //pick the element which is present in that index 
+        subset.push_back(nums[index]);
+        helper(ans,subset,nums,index+1);
+        
+        //not pic this element 
+        subset.pop_back();
+        helper(ans,subset,nums,index+1);
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>ans;
+        vector<int>subset;
+        helper(ans,subset,nums,0);
+        return ans;
+    }
+};
