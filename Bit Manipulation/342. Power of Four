@@ -1,0 +1,22 @@
+T.C-->O(1) // for each number we will check for 32 bits,
+s.c --> O(1)
+------------
+Code:\
+-------
+#include<bits/stdc++.h>
+class Solution {
+public:
+    bool isPowerOfFour(int num) 
+    {
+      if(num < 0) return false;
+      int pos = 0;
+      int ones_count = 0;
+      while(num)
+      {
+          if(num & 1) ones_count += 1; // for checking the last bit is set or unset bit
+          pos++;
+         num = num >> 1;
+      }
+     return ones_count == 1 && (pos & 1); //for checking the pos is even or odd.
+    }
+};
