@@ -1,0 +1,36 @@
+T.c--> O(2^n *k)
+S.c-->O(k*x)
+-----------------
+Code:
+-----
+class Solution {
+public:
+    void helper(int index, vector<vector<int>>&ans, vector<int>&subset,vector<int>&arr,int target)
+    {
+        //base case 
+        if(target == 0)
+        {
+            ans.push_back(subset);
+            return;
+        }
+        
+        for(int i = index; i < arr.size(); i++)
+        {
+            if(i > index && arr[i] == arr[i-1]) continue; // vai tor age akta same mal ekhane bose giyechilo //to avoid duplicate
+            if(arr[i] > target) break;
+            
+            subset.push_back(arr[i]);
+            helper(i+1,ans,subset,arr,target - arr[i]);
+            subset.pop_back();  
+        }
+    }
+    
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target)
+    {
+        vector<vector<int>> ans;
+        vector<int>subset;
+        sort(candidates.begin(),candidates.end());
+        helper(0,ans,subset,candidates,target);
+        return ans;
+    }
+};
