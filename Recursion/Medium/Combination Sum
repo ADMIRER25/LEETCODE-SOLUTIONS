@@ -1,0 +1,44 @@
+1. All numbers will be positive integers.
+2. Elements in a combination (a1, a2, …, ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+3. The combinations themselves must be sorted in ascending order.
+
+Expected Time Complexity: O(X2 * 2N), where X is average of summation B/arri for every number in the array.
+Expected Auxiliary Space: O(X * 2N)
+
+Code:
+-----
+
+class Solution {
+  public:
+    //Function to return a list of indexes denoting the required 
+    //combinations whose sum is equal to given number.
+    void helper(vector<vector<int>>&ans, vector<int>&subset,vector<int>&arr,int target,int index)
+    {
+        if(index >= arr.size())
+        {
+            if(target == 0)
+            {
+                ans.push_back(subset);
+            }
+            return;
+        }
+        //for the case of pipcking we pick it again and again until the base case hits;
+        if(arr[index] <= target)
+        {
+            subset.push_back(arr[index]);
+            helper(ans,subset,arr,target-arr[index],index);
+            subset.pop_back();
+        }
+        helper(ans,subset,arr,target,index + 1);
+    }
+    vector<vector<int> > combinationSum(vector<int> &a, int target)
+    {
+       vector<vector<int>>ans;
+       vector<int>subset;
+       unordered_set<int>s(a.begin(),a.end()); // to get theunoque combination
+       a.assign(s.begin(),s.end());
+       sort(a.begin(),a.end()); // to get the combination as well as the combination elements in sorted order
+       helper(ans,subset,a,target,0);
+       return ans;
+    }
+};
