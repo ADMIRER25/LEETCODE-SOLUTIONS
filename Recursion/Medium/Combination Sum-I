@@ -33,3 +33,29 @@ public:
        return ans;  
     }
 };
+----------------------------------------------------------------------------------------------------
+class Solution {
+public:
+     void helper(vector<vector<int>>&ans, vector<int>&subset,vector<int>&arr,int target,int index)
+    {
+        if(target == 0) ans.push_back(subset);
+         
+       for(int i = index; i < arr.size(); i++)
+       {
+           if(arr[i] <= target)
+           {
+               subset.push_back(arr[i]);
+               helper(ans,subset,arr,target-arr[i],i);
+               subset.pop_back();
+           }
+       }
+      
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target)
+    {
+       vector<vector<int>>ans;
+       vector<int>subset;
+       helper(ans,subset,candidates,target,0);
+       return ans;  
+    }
+};
