@@ -1,0 +1,35 @@
+T>C-->O(2^t*k) k is the avg combination size 
+S.C--> k *x x is the number of combination
+------------------------------------------
+Code:
+-----
+class Solution {
+public:
+     void helper(vector<vector<int>>&ans, vector<int>&subset,vector<int>&arr,int target,int index)
+    {
+        if(index >= arr.size())
+        {
+            if(target == 0)
+            {
+                ans.push_back(subset);
+            }
+            return;
+        }
+        //for the case of picking we pick it again and again until the base case hits;
+        if(arr[index] <= target)
+        {
+            subset.push_back(arr[index]);
+            helper(ans,subset,arr,target-arr[index],index);
+            subset.pop_back();
+        }
+
+        helper(ans,subset,arr,target,index + 1);
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target)
+    {
+       vector<vector<int>>ans;
+       vector<int>subset;
+       helper(ans,subset,candidates,target,0);
+       return ans;  
+    }
+};
