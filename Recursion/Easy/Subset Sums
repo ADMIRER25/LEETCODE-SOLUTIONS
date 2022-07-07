@@ -1,0 +1,29 @@
+Time Complexity: O(2^N)
+Auxiliary Space: O(2^N)
+------------------------
+Code:
+-----
+class Solution
+{
+  public:
+   void helper(vector<int>&ans , int sum, int idx,vector<int>&arr, int size)
+   {
+       if(idx >= size)
+       {
+           ans.push_back(sum);
+           return;
+       }
+       //can take this index
+       helper(ans,sum+arr[idx],idx+1,arr,size);
+
+       //dont take that index into sum
+       helper(ans,sum,idx+1,arr,size);
+   }
+      vector<int> subsetSums(vector<int> arr, int N)
+      {
+          vector<int>ans;
+          helper(ans,0,0,arr,N);
+          sort(ans.begin(),ans.end());
+          return ans;
+      }
+};
