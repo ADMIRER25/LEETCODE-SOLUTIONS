@@ -1,4 +1,4 @@
-Time Complexity: O(2^N)
+Time Complexity: O(2^N) + O(2^Nlog(2^n))
 Auxiliary Space: O(2^N)
 ------------------------
 Code:
