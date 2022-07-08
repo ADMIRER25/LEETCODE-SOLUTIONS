@@ -1,0 +1,106 @@
+t.c and s.c -->we will discuss about it later 
+class Solution {
+public:
+  
+  void helper(vector<vector<string>>&ans, vector<string>&vec,vector<int>&left,vector<int>&upperdiag,vector<int>&lowerdiag,int col,int n)
+  {
+    if(col == n)
+    {
+      ans.push_back(vec);
+      return;
+    }
+    
+    for(int row = 0; row < n; row++)
+    {
+      if(left[row] == 0 && upperdiag[n -1 +col - row] == 0 && lowerdiag[row+col] == 0)
+      {
+        //add it 
+        vec[row][col] = 'Q';
+        left[row] = 1;
+        upperdiag[n -1 +col - row] = 1;
+        lowerdiag[row+col] = 1;
+        helper(ans,vec,left,upperdiag,lowerdiag,col+1,n);
+        //remove everything which are added
+        vec[row][col] = '.';
+        left[row] = 0;
+        upperdiag[n -1 +col - row] = 0;
+        lowerdiag[row+col] = 0;
+      }
+    }
+  }
+    vector<vector<string>> solveNQueens(int n) 
+    {
+      vector<vector<string>> ans;
+      vector<string>vec(n);
+      string s(n,'.');
+      for(int i = 0; i < n; i++) vec[i] = s;
+      vector<int>left(n,0),upperdiag(2*n-1,0),lowerdiag(2*n-1,0);
+      helper(ans,vec,left,upperdiag,lowerdiag,0,n);
+      return ans;
+      
+    }
+};
+----------------------------------------------------------------------------------------------------
+class Solution {
+public:
+  bool is_Safe(int row,int col,vector<string>&vec,int n)
+  {
+     //for left checking 
+    int temprow = row;
+    int tempcol = col;
+    while(col >= 0)
+    {
+      if(vec[row][col] == 'Q') return false;
+      col--;
+    }
+    row = temprow;
+    col = tempcol;
+    //checking for lowerDiagonal
+    while(row < n && col >= 0)
+    {
+      if(vec[row][col] == 'Q') return false;
+      row++;
+      col--;
+    }
+    //checking for upperDiagonal
+    row = temprow;
+    col = tempcol;
+    while(row >= 0 && col >= 0)
+    {
+      if(vec[row][col] == 'Q') return false;
+      row--;
+      col--;
+    }
+    
+    return true;
+  }
+  
+  void helper(vector<vector<string>>&ans, vector<string>&vec,int col,int n)
+  {
+    if(col == n)
+    {
+      ans.push_back(vec);
+      return;
+    }
+    
+    for(int row = 0; row < n; row++)
+    {
+      if(is_Safe(row,col,vec,n))
+      {
+        vec[row][col] = 'Q';
+        helper(ans,vec,col+1,n);
+        vec[row][col] = '.';
+      }
+    }
+  }
+    vector<vector<string>> solveNQueens(int n) 
+    {
+      vector<vector<string>> ans;
+      vector<string>vec(n);
+      string s(n,'.');
+      for(int i = 0; i < n; i++) vec[i] = s;
+      helper(ans,vec,0,n);
+      return ans;
+      
+    }
+};
