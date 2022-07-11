@@ -1,0 +1,25 @@
+T.C--> O(n)
+s.c--> O(1)
+-----------
+Code:
+-----
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        int sum = 0;
+        int mx = nums[0];
+      for(int i = 0; i < nums.size(); i++)
+      {
+        sum += nums[i];
+        //if the sum is greater than the max sum then update the max
+        mx = max(mx,sum);
+        //because the negative sum is not helping to incerase the sum
+        if(sum < 0)
+        {
+          sum = 0;
+        }
+      }
+      return mx;
+    }
+};
