@@ -1,0 +1,36 @@
+T.C-->O(N)
+S.C-->O(1)
+-------------
+Code:
+-----
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) 
+    {
+      int ptr = -1;
+      for(int i = nums.size()-1; i > 0; i--)
+      {
+        if(nums[i] > nums[i-1])
+        {
+          ptr = i-1;
+          break;
+        }
+      }
+      if(ptr == -1)
+      {
+       sort(nums.begin(),nums.end());
+        return;
+      }
+      int ptr2;
+      for(int i = nums.size()-1; i > ptr; i--)
+      {
+        if(nums[i] > nums[ptr])
+        {
+          ptr2 = i;
+          break;
+        }
+      }
+      swap(nums[ptr],nums[ptr2]);
+      sort(nums.begin()+(ptr+1),nums.end());
+    }
+};
