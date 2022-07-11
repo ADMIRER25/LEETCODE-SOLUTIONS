@@ -1,0 +1,34 @@
+T.c--> O(N^2)
+S.c--> O(N)
+---------------
+Code:
+-----
+class Solution {
+public:
+    string getPermutation(int n, int k) 
+    {
+      string ans = "" ;
+      vector<int>permute;
+      int fact = 1;
+      for(int i = 1; i <= n; i++)
+      {
+        fact *= i;
+        permute.push_back(i);
+      }
+      fact /= n;
+      k -= 1;
+      while(true)
+      {
+        if(permute.size() == 1)
+        {
+          ans += to_string(permute[0]);
+          break;
+        }
+        ans = ans + to_string(permute[k/fact]);
+        permute.erase(permute.begin() + (k/fact));
+        k = k % fact;
+        fact /= permute.size();
+      }
+      return ans;
+    }
+};
