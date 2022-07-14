@@ -1,5 +1,5 @@
 Using one stack
-T.c--> O(N)
+T.c--> O(2N)
 S.C--> O(N)
 ------------
 Code:
