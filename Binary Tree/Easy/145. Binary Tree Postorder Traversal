@@ -1,0 +1,101 @@
+Using one stack
+T.c--> O(N)
+S.C--> O(N)
+------------
+Code:
+-----
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root)
+    {
+      vector<int>ans ;
+      TreeNode *curr = root;
+      TreeNode * temp;
+      stack<TreeNode*>st;
+      while(st.size() || curr != nullptr)
+      {
+        //we will push the curr element if it is not null then we will go to the left
+        if(curr != nullptr )
+        {
+          st.push(curr);
+          curr = curr -> left;
+        }
+        //if the left side is null then go to the right side
+        else 
+        {
+          temp = st.top() -> right;
+          
+          //if the right side is null then we have to go back othewise right side will be the current element and then again it go the left side 
+          if(temp == nullptr)
+          {
+            temp = st.top();
+            st.pop();
+            ans.push_back(temp -> val);
+            while(st.size() && st.top()-> right == temp)
+            {
+              temp = st.top();
+              st.pop();
+              ans.push_back(temp->val);
+            }
+          }
+          else 
+          {
+            curr = temp;
+          }
+        }
+      }
+      return ans; 
+    }
+};
+--------------------------------------------------------------------------------
+using two stack
+----------------
+S.C --> O(2N)
+-------------
+Code:
+-----
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root)
+    {
+      vector<int>ans ;
+      if(root == nullptr) return ans;
+      stack<TreeNode*> st1,st2;
+      st1.push(root);
+      while(st1.size())
+      {
+        st2.push(st1.top());
+        st1.pop();
+        if(st2.top()->left != nullptr) st1.push(st2.top() ->left);
+        if(st2.top()->right != nullptr) st1.push(st2.top() ->right);
+      }
+      while(st2.size())
+      {
+        ans.push_back(st2.top()->val);
+        st2.pop();
+      }
+      return ans;
+    }
+};
+----------------------------------------------------------------------------
+using recursion
+----------------
+space complexity-->O(N)
+-----------------------
+class Solution {
+public:
+  void helper(vector<int>&ans,TreeNode *root)
+  {
+    if(root == nullptr) return;
+    
+    helper(ans,root->left);
+    helper(ans,root -> right);
+    ans.push_back(root ->val);
+  }
+    vector<int> postorderTraversal(TreeNode* root)
+    {
+      vector<int>ans;
+      helper(ans,root);
+      return ans;
+    }
+};
