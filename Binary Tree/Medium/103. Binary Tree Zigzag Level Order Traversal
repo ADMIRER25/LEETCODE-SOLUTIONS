@@ -1,0 +1,36 @@
+T.C--> O(N)
+S.C--> O(N)
+-----------
+Code:
+-----
+class Solution {
+public:
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) 
+    {
+        vector<vector<int>>ans;
+        if(root == nullptr) return ans;
+      
+      queue<TreeNode*>q;
+      bool flag = true;
+      q.push(root);
+      while(q.size())
+      {
+        int size = q.size();
+        vector<int>temp(size);
+        
+        for(int i = 0; i < size; i++)
+        {
+          TreeNode *font = q.front();
+          q.pop();
+          int index = (flag)? i : size - i - 1;
+          temp[index] = font -> val;
+          
+          if(font ->left) q.push(font -> left);
+          if(font -> right) q.push(font ->right);
+        }
+        flag = !flag;
+        ans.push_back(temp);
+      }
+      return ans;
+    }
+};
