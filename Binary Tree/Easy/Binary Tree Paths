@@ -1,0 +1,32 @@
+T.C-->O(N)
+S.C-->O(H)
+----------
+code:
+-----
+class Solution {
+public:
+  bool isLeaf(TreeNode *root)
+  {
+    if(!root -> left && !root -> right) return true;
+    return false;
+  }
+  void helper(vector<string>&ans,string s,TreeNode *root)
+  {
+    if(isLeaf(root))
+    {
+      s += to_string(root -> val);
+      ans.push_back(s);
+      return;
+    }
+   s += to_string(root -> val) + "->";
+   if(root -> left) helper(ans,s,root -> left);
+   if(root ->right) helper(ans,s,root->right);
+  }
+    vector<string> binaryTreePaths(TreeNode* root) {
+      vector<string>ans;
+      string s = "";
+      if(!root) return ans;
+      helper(ans,s,root);
+      return ans;
+    }
+};
