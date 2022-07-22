@@ -1,0 +1,47 @@
+T.c--> O(N)
+S.C--> O(N)
+------------
+Code:
+-----
+class Solution {
+public:
+   void path(vector<TreeNode*>&p1,vector<TreeNode*>&p2,vector<TreeNode*>&trav,TreeNode *p,TreeNode *q,TreeNode *root)
+  {
+    trav.push_back(root);
+    if(root ->val == p->val) 
+    {
+      p1 = trav;
+    }
+    if(root -> val == q->val)
+    {
+      p2 = trav;
+    }
+    if(!root ->left && !root ->right) return;
+    if (root->left)
+    {
+       path(p1,p2,trav,p,q,root -> left);
+       trav.pop_back();
+    } 
+     
+    if(root ->right) 
+    {
+      path(p1,p2,trav,p,q,root->right);
+       trav.pop_back();
+    }
+  }
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) 
+    {
+      vector<TreeNode*>p2,trav,p1;
+      path(p1,p2,trav,p,q,root);
+      TreeNode* same;
+      int mn = min(p1.size(),p2.size());
+      for(int i = 0; i < mn; i++)
+      {
+        if(p1[i] -> val != p2[i] -> val) break;
+        same = p1[i];
+      }
+      return same;
+    }
+};
+----------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------
