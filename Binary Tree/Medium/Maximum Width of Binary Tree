@@ -1,0 +1,37 @@
+T.C-->O(N)
+S.C-->O(2N)
+-----------
+Code:
+-----
+class Solution 
+{
+public:
+    int widthOfBinaryTree(TreeNode* root) 
+    {
+      if(!root) return 0;
+      queue<pair<TreeNode*,long long>>q;
+      q.push({root,0});
+      long long start,end,min; // long for prevent overrflow
+      long long ans = INT_MIN;
+      while(q.size())
+      {
+        start  = q.front().second;
+        long long size = q.size();
+        min = q.front().second;
+        while(size--)
+        {
+          auto it = q.front();
+          q.pop();
+          if(size == 0) end = it.second;
+          long long id = it.second;
+          long long updated = id - min;
+          if(it.first -> left) q.push({it.first->left,2*updated +1});
+          
+          if(it.first -> right) q.push({it.first->right,2*updated +2});
+           
+        }
+        ans = max(ans,(end - start +1 ));
+      }
+      return ans;
+    }
+};
