@@ -1,0 +1,85 @@
+t.c-->O(N)
+s.c--> O(n)
+-----------
+Code:
+-----
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+  void parent(queue<TreeNode*>&pa,unordered_map<TreeNode*,TreeNode*>&mp,TreeNode* root)
+  {
+    while(pa.size())
+    {
+      TreeNode* node = pa.front();
+      pa.pop();
+      if(node ->left) 
+      {
+         mp.insert({node->left,node});
+         pa.push(node->left);
+      }
+      if(node ->right)
+      {
+          mp.insert({node->right,node});
+          pa.push(node->right);
+      }
+    }
+  }
+ void FindNodes(vector<int>&ans,queue<TreeNode*>&qv,unordered_map<TreeNode*,bool>&visited,unordered_map<TreeNode*,TreeNode*>&mp,int level,int k)
+  {
+    while(level != k)
+    {
+      int size = qv.size();
+      level++;
+      while(size--)
+      {
+        TreeNode* node = qv.front();
+        qv.pop();
+        if(node ->left && !visited[node->left])
+        {
+          qv.push(node ->left);
+          visited[node->left] = true;
+        }
+        if(node ->right  && !visited[node->right])
+        {
+          qv.push(node ->right);
+          visited[node->right] = true;
+        }
+        if(mp[node] && !visited[mp[node]])
+        {
+          qv.push(mp[node]);
+          visited[mp[node]] = true;
+        }
+      }
+    }
+   while(qv.size())
+   {
+     ans.push_back(qv.front()->val);
+     qv.pop();
+   }
+  }
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) 
+    {
+       //to create a parent pointer 
+      vector<int>ans;
+      queue<TreeNode*>pa,qv;
+      unordered_map<TreeNode*,TreeNode*>mp;
+      unordered_map<TreeNode*,bool>visited;
+      
+      pa.push(root);
+      parent(pa,mp,root);
+      
+      qv.push(target);
+      visited[target] = true;
+      
+      FindNodes(ans,qv,visited,mp,0,k);
+      return ans;
+    }
+};
