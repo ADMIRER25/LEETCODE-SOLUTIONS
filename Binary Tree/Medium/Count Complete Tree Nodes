@@ -1,0 +1,30 @@
+T.C-->O(LogN)^2 
+S.c--> O(LogN)
+---------------
+Code:
+-----
+class Solution {
+public:
+   int countLeft(TreeNode* root,int count)
+   {
+     if(!root) return 0;
+     
+     return 1 + countLeft(root ->left,count + 1);
+   }
+   int countRight(TreeNode* root,int count)
+   {
+     if(!root) return 0;
+     
+     return 1 + countRight(root ->right,count + 1);
+   }
+    int countNodes(TreeNode* root) 
+    {
+      if (!root) return 0;
+      int left =  1 + countLeft(root->left,0); 
+      int right = 1 + countRight(root->right,0); 
+      
+      if(left == right) return ((1 << left) - 1);
+      
+      return 1 + countNodes(root->left) + countNodes(root->right);
+    }
+};
