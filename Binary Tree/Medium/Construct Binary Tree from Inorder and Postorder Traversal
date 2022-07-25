@@ -1,0 +1,29 @@
+T.C-->O(N)
+S.C-->O(N)
+----------
+
+Code:
+-----
+class Solution {
+public:
+  TreeNode* buildTreehelper(vector<int>&postorder,vector<int>&inorder,int prestart,int preend,int instart,int inend,unordered_map<int,int>&mp)
+  {
+    if(prestart < preend) return NULL;
+    TreeNode* root = new TreeNode(postorder[prestart]);
+    
+    int inroot = mp[root->val];
+    int numsright = inend - inroot;
+    
+    root ->right = buildTreehelper(postorder,inorder,prestart-1,prestart-numsright,inroot+1,inend,mp);
+    root ->left =  buildTreehelper(postorder,inorder,prestart-numsright-1,preend,instart,inroot -1 ,mp);
+    
+    return root;
+  }
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) 
+    {
+        unordered_map<int,int>mp;
+      for(int i = 0; i < inorder.size(); i++) mp[inorder[i]] = i;
+      
+      return buildTreehelper(postorder,inorder,postorder.size()-1,0,0,inorder.size()-1,mp);
+    }
+};
