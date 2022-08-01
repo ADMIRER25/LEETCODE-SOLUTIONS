@@ -19,3 +19,52 @@ public:
       prev = root;
     }
 };
+using iterative method:
+----------------------
+ */
+class Solution {
+public:
+    void flatten(TreeNode* root) 
+    {
+       if(!root) return;
+      
+       stack<TreeNode*>st;
+       st.push(root);
+      while(st.size())
+      {
+        TreeNode* node = st.top();
+        st.pop();
+        if(node->right) st.push(node->right);
+        if(node ->left) st.push(node ->left);
+        if(st.size()) node -> right = st.top();
+        node ->left = NULL;
+      }
+    }
+};
+using morris traversal:
+-----------------------
+T.C-->O(N)
+S.C-->O(1)
+----------
+class Solution {
+public:
+    void flatten(TreeNode* root) 
+    {
+      TreeNode* curr = root;
+      while(curr)
+      {
+        TreeNode* prev;
+        if(curr ->left) 
+        {
+         prev = curr -> left;
+         while(prev ->right)
+          {
+            prev = prev ->right;
+          }
+          prev->right = curr -> right;
+          curr ->right = curr->left;
+          curr ->left = NULL;
+        }
+        curr = curr ->right;
+      } 
+    }
