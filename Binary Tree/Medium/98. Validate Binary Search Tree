@@ -1,0 +1,26 @@
+T.C-->O(N)
+S.C-->O(N)
+----------
+CODE:
+----
+
+class Solution {
+public:
+ bool helper(TreeNode* root,long long lower_bound,long long upper_bound)
+ {
+   if(!root) return true;
+   
+   if(root -> val > lower_bound && root -> val < upper_bound) 
+   {
+     if(helper(root -> left,lower_bound,root -> val) && helper(root->right,root->val,upper_bound))
+         return true;
+   }
+   return false;
+ }
+    bool isValidBST(TreeNode* root) 
+    {
+       if(helper(root->left,LONG_MIN,root->val) && helper(root->right,root->val,LONG_MAX))
+         return true;
+      return false;
+    }
+};
