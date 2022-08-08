@@ -1,0 +1,33 @@
+T.C-->O(N)
+S.C-->O(N) // you can use morris traversal and in O(1) space complexity
+-------------------------------------------------------------------------
+
+class Solution {
+  void helper(TreeNode *node,TreeNode *&CheckNode,TreeNode *&def1,TreeNode* &def2)
+  {
+    if(!node) return;
+    
+    helper(node->left,CheckNode,def1,def2);
+    if(CheckNode->val > node ->val && !def1)
+    {
+      def1 = CheckNode;
+      def2 = node;
+    }
+    else if(CheckNode->val > node ->val)
+    {
+      def2 = node;
+    }
+    CheckNode = node ;
+    helper(node->right,CheckNode,def1,def2);
+  }
+public:
+    void recoverTree(TreeNode* root) 
+    {
+      TreeNode* CheckNode = new TreeNode(INT_MIN);// try to use intmin in all cases 
+      TreeNode *def1,*def2;
+      def1 = def2 = NULL;
+      
+      helper(root,CheckNode,def1,def2);
+      swap(def1->val,def2->val);
+    }
+};
