@@ -2,33 +2,26 @@
 class Solution {
 public:
     void merge(vector<int>&a, int m, vector<int>&b, int n) 
-    { int i,j;
-      if(m == 0)
+    { 
+      int i,j;
+      int gap = ceil((m+n)/2.0);
+      i = 0,j = gap;
+      while(gap > 0)
       {
-        int idx = 0;
-        for(i = m; i < m + n; i++)
-        {
-          a[i] = b[idx];
-          idx++;
-        }
-      }
-      else if(n == 0) return;
-      
-     // cout << a.size() << endl;
-      for(i = 0; i < m; i++)
-      {
-        if(a[i] > b[0]) swap(a[i],b[0]);
-        
-        int first = b[0];
-        
-        for(j = 1; j < n && first > b[j];j++)
-        {
-          b[j-1] = b[j];
-        }
-        b[j-1] = first;
+         if(j >= m+n)
+          {
+            if(gap == 1) gap = 0;
+            else gap = ceil(gap/2.0);  
+            i = 0,j = gap;
+          }
+          if(j < m && a[i] > a[j]) swap(a[i],a[j]);
+          else if(j >= m && i < m && a[i] > b[j-m]) swap(a[i],b[j-m]);
+          else if(j >= m && i >= m && b[i-m] > b[j-m]) swap(b[i-m],b[j-m]);
+          i++,j++;
+       
       }
       int idx = 0;
-      for(i = m; i < m + n; i++)
+      for(i = m; i < m +n; i++)
       {
         a[i] = b[idx];
         idx++;
